@@ -75,7 +75,8 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 			preg_match_all("/__\('(.*?)'\)/", $line, $matches);
 			if(count($matches[1])>0):
 				foreach ($matches[1] as $matches) {
-					if (strpos($matches, ',array')) $matches = substr($matches, 0, strpos($matches, ',array')-1); // remove like __('Poll (:id) is :status now!',array(':id'=>$id,':status'=>'inactive')	
+					if (strpos($matches, ',array')) $matches = substr($matches, 0, strpos($matches, ',array')-1); // remove like __('Poll (:id) is :status now!',array(':id'=>$id,':status'=>'inactive')
+					if (strpos($matches, ', array')) $matches = substr($matches, 0, strpos($matches, ', array')-1); // remove like __('Poll (:id) is :status now!', array(':id'=>$id,':status'=>'inactive')
 					$lines_array[$file][] = $matches;
 				}
 			endif;
