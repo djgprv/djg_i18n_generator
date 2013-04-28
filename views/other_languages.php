@@ -24,4 +24,6 @@ if (!defined('IN_CMS')) { exit(); }
  */
 ?>
 <h1><?php echo __('Other languages generator.'); ?></h1>
-<p>Comming soon. I create auto translation using google traslator API.</p>
+<?php
+echo 'Works very sloooow but is for free;) => '. Djgi18nGenerator::translate('pl','Works very sloooow but is for free;)');
+?>

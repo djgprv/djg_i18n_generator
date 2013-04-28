@@ -45,4 +45,10 @@ class Djgi18nGenerator {
 	{
 		return $this->langsArray[$lang];
 	}
+	public static function translate($lang,$text)
+	{
+		$url = 'http://google-translate-api.herokuapp.com/translate?from=en&to='.$lang.'&text%5B%5D='.urlencode($text);
+		$obj = (array)json_decode(file_get_contents($url));
+		return $obj[$text];
+	}
 }
