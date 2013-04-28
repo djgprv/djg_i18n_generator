@@ -24,6 +24,7 @@ if (!defined('IN_CMS')) { exit(); }
  */
 ?>
 <h1><?php echo __('Basic en-message.php file generator.'); ?></h1>
+<div id="djg_i18n_generator">
 <form method="POST">
 <label for="plugin_name"><?php echo __('Plugin'); ?>: </label>
 <select id="plugin_name" name="plugin_name">
@@ -116,8 +117,8 @@ return array(
 	}
 	$output .= ");";
 	?>
-	<textarea class="content" rows="20"><?php echo $output; ?></textarea>
-	<input class="button save_file" value="<?php echo __('Save file'); ?>" />
+	<textarea class="content"><?php echo $output; ?></textarea>
+	<img class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
 	<?php
 
 	/*
@@ -130,6 +131,7 @@ return array(
 
 endif;
 ?>
+</div>
 <script type="text/javascript">
 
 var picsArray = new Array();
