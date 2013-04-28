@@ -27,6 +27,11 @@ return array(
 'Files' => 'Files', 
 'Generate' => 'Generate', 
 'Poll (:id) is :status now!' => 'Poll (:id) is :status now!', 
+'Save file' => 'Save file', 
+'Do you want to change the existing file?' => 'Do you want to change the existing file?', 
+'Unspecified ajax error.' => 'Unspecified ajax error.', 
+'The file was not saved.' => 'The file was not saved.', 
+'The file has been saved as :name' => 'The file has been saved as :name', 
 /** views\other_languages.php */ 
 'Other languages generator.' => 'Other languages generator.', 
 /** views\settings.php */ 

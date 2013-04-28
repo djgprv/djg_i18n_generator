@@ -23,6 +23,10 @@ if (!defined('IN_CMS')) { exit(); }
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 license
  */
 class Djgi18nGenerator {
+
+	private $langsArray = array();
+	
+	
 	function Djgi18nGenerator()
 	{
 		// constructor;
@@ -36,5 +40,9 @@ class Djgi18nGenerator {
 		$directory = CORE_ROOT.DS.'plugins';
 		if ($handle = opendir($directory)) while (false !== ($file = readdir($handle))) if ($file != "." && $file != "..") if (is_dir($directory. "/" . $file)) $array_items[] = $file; closedir($handle);
 		return $array_items;	
+	}
+	public static function getLang($lang)
+	{
+		return $this->langsArray[$lang];
 	}
 }

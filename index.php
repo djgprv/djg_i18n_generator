@@ -32,8 +32,13 @@ Plugin::setInfos(array(
 	'author'      => 'Michał Uchnast',
     'website'     => 'http://www.kreacjawww.pl/',
     'update_url'  => 'http://kreacjawww.pl/public/wolf_plugins/plugin-versions.xml',
-    'require_wolf_version' => '0.7.3'
+    'require_wolf_version' => '0.7.3',
+	'type'			=>	'both'
 ));
 
 Plugin::addController('djg_i18n_generator', __('[djg] i18n Generator'), true, true);
+Dispatcher::addRoute(array(
+	/* backend */
+	'/djg_i18n_generator/save_file.php' => '/plugin/djg_i18n_generator/save_file' //ajax
+));
 include_once('models'.DS.'Djgi18nGenerator.php');

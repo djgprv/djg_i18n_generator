@@ -32,8 +32,8 @@ if (!defined('IN_CMS')) { exit(); }
                 <td class="label"><label for="settings_comment_file"><?php echo __('Add a comments'); ?>: </label></td>
                 <td class="field">
 					<select id="settings_comment_file" name="settings[comment_file]">
-						<option value="xml" <?php if($settings['comment_file'] == "1") echo 'selected="selected"' ?>><?php echo __('Yes'); ?></option>
-						<option value="txt" <?php if($settings['comment_file'] == "0") echo 'selected="selected"' ?>><?php echo __('No'); ?></option>
+						<option value="1" <?php if($settings['comment_file'] == "1") echo 'selected="selected"' ?>><?php echo __('Yes'); ?></option>
+						<option value="0" <?php if($settings['comment_file'] == "0") echo 'selected="selected"' ?>><?php echo __('No'); ?></option>
 					</select>	
 				</td>
 				<td><?php echo __('Set Yes if you want to add commnet about the source file to message file.'); ?></td>

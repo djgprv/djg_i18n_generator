@@ -56,4 +56,16 @@ class DjgI18nGeneratorController extends PluginController {
     function other_languages() {
 		$this->display('djg_i18n_generator/views/other_languages');
 	}
+	/********/
+	/* AJAX */
+	/********/
+	function save_file()
+	{
+		$json2['error'] = 1;
+		$file_name = $_GET['file_name'];
+		$plugin_name = $_GET['plugin_name'];
+		$content = $_GET['content'];		
+		if(file_put_contents(CORE_ROOT.DS.'plugins'.DS.$plugin_name.DS.'i18n'.DS.$file_name, $content)) $json2['error'] = 0;
+		echo json_encode($json2);		
+	}
 }

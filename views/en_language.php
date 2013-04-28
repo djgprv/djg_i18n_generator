@@ -37,7 +37,9 @@ if (!defined('IN_CMS')) { exit(); }
 	?>
 </select>
 <?php
+
 $file_ext = (isset($_POST['files']))?$_POST['files']:'*.*';
+$add_comments = Plugin::getSetting('comment_file','djg_i18n_generator');
 ?>
 <label for="files"><?php echo __('Files'); ?>: </label>
 <input name="files" id="files" value="<?php echo $file_ext; ?>"/>
@@ -58,6 +60,7 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 	}
 
 	$plugin_name = $_POST['plugin_name'];
+	$file_name = 'en-message.php';
 	chdir(CORE_ROOT.DS.'plugins'.DS.$plugin_name);
 
 	$files_list = array();
@@ -86,7 +89,7 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 	/** unique */
 	$a = array();
 	foreach ($lines_array as $key => $value) {
-		$a[] = "/** $key */";
+		if($add_comments == '1')$a[] = "/** $key */";
 
 		foreach ($value as $fl1) {
 			$a[] =  "'".$fl1."' => '".$fl1."',";
@@ -113,7 +116,8 @@ return array(
 	}
 	$output .= ");";
 	?>
-	<textarea rows="20"><?php echo $output; ?></textarea>
+	<textarea class="content" rows="20"><?php echo $output; ?></textarea>
+	<input class="button save_file" value="<?php echo __('Save file'); ?>" />
 	<?php
 
 	/*
@@ -125,3 +129,38 @@ return array(
 	printf('Loaded in %.3f seconds.', $totaltime);
 
 endif;
+?>
+<script type="text/javascript">
+
+var picsArray = new Array();
+var value = null;
+function sendNames() {
+	return false;
+};
+$(document).ready(function() {
+	$(".save_file").click(function(){
+		var action = confirm('<?php echo __('Do you want to change the existing file?'); ?>');
+		if(action){
+			$.ajax({ 
+					type: "GET", 
+					data: {'file_name':'<?php echo $file_name; ?>','plugin_name':'<?php echo $plugin_name; ?>','content':$('.content').val()},
+					dataType: "json", cache: true,
+					url: '<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>djg_i18n_generator/save_file.php',
+					contentType: "application/json; charset=utf-8", 
+					beforeSend: function() {},
+					error: function() {alert('<?php echo __('Unspecified ajax error.'); ?>');}, 
+					success: function(data) {
+						if(data.error!=0)
+						{
+							alert('<?php echo __('The file was not saved.'); ?>');
+						}else{
+							alert('<?php echo __('The file has been saved as :name',array(':name'=>$file_name)); ?>');
+						}
+					},
+					complete: function() {}
+				});
+		};
+		return false;
+	});
+});
+</script>
