@@ -19,7 +19,7 @@ return array(
 /** views\documentation.php */ 
 'Documentation' => 'Documentation', 
 /** views\en_language.php */ 
-'Basic en-meassage.php file generator.' => 'Basic en-meassage.php file generator.', 
+'Basic en-message.php file generator.' => 'Basic en-message.php file generator.', 
 'Plugin' => 'Plugin', 
 '- chose plugin -' => '- chose plugin -', 
 'Files' => 'Files', 

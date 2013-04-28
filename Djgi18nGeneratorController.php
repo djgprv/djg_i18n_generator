@@ -22,7 +22,7 @@ if (!defined('IN_CMS')) { exit(); }
  * @copyright kreacjawww.pl
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 license
  */
-class Djgi18nGeneratorController extends PluginController {
+class DjgI18nGeneratorController extends PluginController {
 
     public function __construct() {
         $this->setLayout('backend');
