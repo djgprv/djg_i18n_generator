@@ -25,8 +25,8 @@ if (!defined('IN_CMS')) { exit(); }
 
 Plugin::setInfos(array(
     'id'          => 'djg_i18n_generator',
-    'title'       => __('[djg] i18n generator'),
-    'description' => __('[djg] i18n generator'),
+    'title'       => __('[djg] i18n Generator'),
+    'description' => __('[djg] i18n Generator'),
     'version'     => '0.0.1-dev.',
    	'license'     => 'GPL',
 	'author'      => 'Michał Uchnast',
@@ -35,5 +35,5 @@ Plugin::setInfos(array(
     'require_wolf_version' => '0.7.3'
 ));
 
-Plugin::addController('djg_i18n_generator', __('[djg] i18n generator'), true, false);
+Plugin::addController('djg_i18n_generator', __('[djg] i18n Generator'), true, true);
 include_once('models'.DS.'Djgi18nGenerator.php');

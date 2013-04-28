@@ -9,13 +9,15 @@
 *
 **/
 return array(
-/** Djgi18nGeneratorController.php */ 
+/** DjgI18nGeneratorController.php */ 
 'The settings have been updated.' => 'The settings have been updated.', 
 /** enable.php */ 
 'djg_i18n_generator - plugin settings initialized.' => 'djg_i18n_generator - plugin settings initialized.', 
 'djg_i18n_generator - unable to store plugin settings!' => 'djg_i18n_generator - unable to store plugin settings!', 
 /** index.php */ 
-'[djg] i18n generator' => '[djg] i18n generator', 
+'[djg] i18n Generator' => '[djg] i18n Generator', 
+/** uninstall.php */ 
+'Unable to delete plugin settings.' => 'Unable to delete plugin settings.', 
 /** views\documentation.php */ 
 'Documentation' => 'Documentation', 
 /** views\en_language.php */ 

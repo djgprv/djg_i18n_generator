@@ -29,7 +29,7 @@ class DjgI18nGeneratorController extends PluginController {
 		$this->assignToLayout('sidebar', new View('../../plugins/djg_i18n_generator/views/sidebar'));
     }
 	public function index() {
-        $this->documentation();
+        $this->en_language();
     }
     public function documentation() {
         $this->display('djg_i18n_generator/views/documentation');
