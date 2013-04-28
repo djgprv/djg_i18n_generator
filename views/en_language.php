@@ -23,7 +23,7 @@ if (!defined('IN_CMS')) { exit(); }
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 license
  */
 ?>
-<h1><?php echo __('Basic en-meassage.php file generator.'); ?></h1>
+<h1><?php echo __('Basic en-message.php file generator.'); ?></h1>
 <form method="POST">
 <label for="plugin_name"><?php echo __('Plugin'); ?>: </label>
 <select id="plugin_name" name="plugin_name">
