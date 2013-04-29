@@ -34,6 +34,8 @@ return array(
 'The file has been saved as :name' => 'The file has been saved as :name', 
 /** views\other_languages.php */ 
 'Other languages generator.' => 'Other languages generator.', 
+'Language' => 'Language', 
+'Translate' => 'Translate', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
 'Add a comments' => 'Add a comments', 

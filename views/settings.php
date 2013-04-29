@@ -29,14 +29,20 @@ if (!defined('IN_CMS')) { exit(); }
     <fieldset style="padding: 0.5em;">
         <table class="fieldset" cellpadding="0" cellspacing="0" border="0">
 			<tr>
-                <td class="label"><label for="settings_comment_file"><?php echo __('Add a comments'); ?>: </label></td>
+                <td class="label"><label for="settings_omment_file"><?php echo __('Header'); ?>: </label></td>
                 <td class="field">
+					<textarea id="settings_omment_file" rows="10" cols="50" name="settings[comment_header]"><?php echo $settings['comment_header']; ?></textarea>
+				</td>
+				<td><?php echo __(''); ?></td>
+			</tr>
+			<tr>
+                <td class="label"><label for="settings_comment_file"><?php echo __('Add a comments'); ?>: </label></td>
+                <td class="field" colspan="2">
 					<select id="settings_comment_file" name="settings[comment_file]">
 						<option value="1" <?php if($settings['comment_file'] == "1") echo 'selected="selected"' ?>><?php echo __('Yes'); ?></option>
 						<option value="0" <?php if($settings['comment_file'] == "0") echo 'selected="selected"' ?>><?php echo __('No'); ?></option>
 					</select>	
 				</td>
-				<td><?php echo __('Set Yes if you want to add commnet about the source file to message file.'); ?></td>
 			</tr>
         </table>
     </fieldset>

@@ -39,6 +39,6 @@ Plugin::setInfos(array(
 Plugin::addController('djg_i18n_generator', __('[djg] i18n Generator'), true, true);
 Dispatcher::addRoute(array(
 	/* backend */
-	'/djg_i18n_generator/save_file.php' => '/plugin/djg_i18n_generator/save_file' //ajax
+	'/djg_i18n_generator/save_file.php' => '/plugin/djg_i18n_generator/save_file', //ajax
+	'/djg_i18n_generator/translate_file.php' => '/plugin/djg_i18n_generator/translate_file' //ajax
 ));
-include_once('models'.DS.'Djgi18nGenerator.php');

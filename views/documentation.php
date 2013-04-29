@@ -25,3 +25,4 @@ if (!defined('IN_CMS')) { exit(); }
 ?>
 <h1><?php echo __('Documentation'); ?></h1>
 <h3>Comming soon</h3>
+<p>https://sites.google.com/site/tomihasa/google-language-codes</p>
