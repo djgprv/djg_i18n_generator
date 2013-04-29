@@ -105,6 +105,7 @@ class DjgI18nGeneratorController extends PluginController {
 	function translate_file()
 	{
 		$json2['error'] = 1;
-		echo json_encode($json2);		
+		$json2['line'] = "'".$_GET['line']."' => '". self::translate($_GET['lang'],$_GET['line']) . "',";
+		echo json_encode($json2);	
 	}
 }

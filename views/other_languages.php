@@ -43,21 +43,72 @@ if (!defined('IN_CMS')) { exit(); }
 	<?php
 		foreach(DjgI18nGeneratorController::getLangs() as $key=>$lang)
 		{
-			//if( (!empty($plugin)) and ($_POST['plugin_name'] == $plugin) ) $selected = 'selected'; else $selected = '';
-			if ($key != 'en') echo '<option '.$lang['name'].' value="'.$key.'"> '.$lang['name'].' </option>';
+			if( (!empty($_POST['lang'])) and ($_POST['lang'] == $key) ) $selected = 'selected'; else $selected = '';
+			if ($key != 'en') echo '<option '.$selected.'  value="'.$key.'"> '.$lang['name'].' </option>';
 		}
+		
 	?>
 </select>
-<input class="button" type="submit" value="<?php echo __('Translate'); ?>" />
+<input class="button" type="submit" value="<?php echo __('Read en-message.php file'); ?>" />
 </form>
 <?php
+
+
+
+
 if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
+	$plugin_name = $_POST['plugin_name'];
+	$file = CORE_ROOT.DS.'plugins'.DS.$plugin_name.DS.'i18n'.DS.'en-message.php';
+	$file_name = $_POST['lang'].'-message.php';
+	if(file_exists($file)):
+		$fp = fopen($file, 'r');
+		$lines = array();
+		while ($line = fgets($fp)){
+			$matches = array();		
+			preg_match_all("/'(.*?)'/", $line, $matches);
+			if(count($matches[1])>0):
+				$json2[]['line'] = $matches[1][1];
+			endif;
+		}
+
+	
+	
+	endif;
 ?>
-<textarea class="example"></textarea>
 <textarea class="content"></textarea>
-<input class="button" type="submit" value="<?php echo __('Translate'); ?>" />
-<?
-	echo 'Works very sloooow but is for free;) => '. DjgI18nGeneratorController::translate($_POST['lang'],'Works very sloooow but is for free;)');
+<img class="translate_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_translate.png" alt="<?php echo __('Translate file'); ?>" title="<?php echo __('Translate file'); ?>" />
+<?php
 endif;
 ?>
 </div>
+<script type="text/javascript">  
+$(document).ready(function(){
+	$(".translate_file").click(function(){
+		var action = confirm('<?php echo __('It can take a view minutes.'); ?>');
+		if(action){
+			jQuery.each(<?php echo json_encode($json2); ?>, function(i, val) {
+				$.ajax({ 
+					type: "GET", 
+					data: {'lang':'<?php echo $_POST['lang']; ?>','line':val['line']},
+					dataType: "json", cache: true,
+					url: '<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>djg_i18n_generator/translate_file.php',
+					contentType: "application/json; charset=utf-8", 
+					beforeSend: function() {},
+					error: function() {alert('<?php echo __('Unspecified ajax error.'); ?>');}, 
+					success: function(data) {
+						$(".content").append(data['line'] + "\n");
+						if(data.error!=0)
+						{
+							//alert('<?php echo __('Translate line error.'); ?>');
+						}else{
+							$(".content").append(data['line'] + "\n");
+						}
+					},
+					complete: function() {}
+				});
+			}); 
+		};
+		return false;
+	});
+});
+ </script>

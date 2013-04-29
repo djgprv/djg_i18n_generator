@@ -35,13 +35,17 @@ return array(
 /** views\other_languages.php */ 
 'Other languages generator.' => 'Other languages generator.', 
 'Language' => 'Language', 
-'Translate' => 'Translate', 
+'Read en-message.php file' => 'Read en-message.php file', 
+'Translate file' => 'Translate file', 
+'It can take a view minutes.' => 'It can take a view minutes.', 
+'Translate line error.' => 'Translate line error.', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
+'Header' => 'Header', 
+'' => '', 
 'Add a comments' => 'Add a comments', 
 'Yes' => 'Yes', 
 'No' => 'No', 
-'Set Yes if you want to add commnet about the source file to message file.' => 'Set Yes if you want to add commnet about the source file to message file.', 
 'Save' => 'Save', 
 'You have modified this page.  If you navigate away from this page without first saving your data, the changes will be lost.' => 'You have modified this page.  If you navigate away from this page without first saving your data, the changes will be lost.', 
 /** views\sidebar.php */ 
