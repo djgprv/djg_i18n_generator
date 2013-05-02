@@ -28,6 +28,8 @@ return array(
 'Generate' => 'Generate', 
 'Poll (:id) is :status now!' => 'Poll (:id) is :status now!', 
 'Save file' => 'Save file', 
+'Copy to clipboard' => 'Copy to clipboard', 
+'Copied to clipboard' => 'Copied to clipboard', 
 'Do you want to change the existing file?' => 'Do you want to change the existing file?', 
 'Unspecified ajax error.' => 'Unspecified ajax error.', 
 'The file was not saved.' => 'The file was not saved.', 
@@ -37,8 +39,8 @@ return array(
 'Language' => 'Language', 
 'Read en-message.php file' => 'Read en-message.php file', 
 'Translate file' => 'Translate file', 
+'Please wait' => 'Please wait', 
 'It can take a view minutes.' => 'It can take a view minutes.', 
-'Translate line error.' => 'Translate line error.', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
 'Header' => 'Header', 
@@ -51,4 +53,5 @@ return array(
 /** views\sidebar.php */ 
 'English language' => 'English language', 
 'Other languages' => 'Other languages', 
+'Dialog window' => 'Dialog window', 
 );

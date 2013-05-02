@@ -38,7 +38,6 @@ if (!defined('IN_CMS')) { exit(); }
 	?>
 </select>
 <?php
-
 $file_ext = (isset($_POST['files']))?$_POST['files']:'*.*';
 $add_comments = Plugin::getSetting('comment_file','djg_i18n_generator');
 ?>
@@ -71,7 +70,6 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 	$lines_array = array();
 
 	foreach ($files_list as $file) {
-		//echo file_exists($file);	
 		$fp = fopen($file, 'r');
 		$lines = array();
 		while ($line = fgets($fp)){
@@ -86,7 +84,6 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 			endif;
 		}
 	}
-
 	/** unique */
 	$a = array();
 	foreach ($lines_array as $key => $value) {
@@ -110,12 +107,8 @@ $output .= "return array(\n";
 	?>
 	<textarea class="content"><?php echo $output; ?></textarea>
 	<img class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
+	<img class="clipboard" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_clipboard.png" alt="<?php echo __('Copy to clipboard'); ?>" title="<?php echo __('Copy to clipboard'); ?>" />
 	<?php
-
-	/*
-
-	*/
-
 	$mtime = explode(' ', microtime());
 	$totaltime = $mtime[0] + $mtime[1] - $starttime;
 	printf('Loaded in %.3f seconds.', $totaltime);
@@ -124,13 +117,13 @@ endif;
 ?>
 </div>
 <script type="text/javascript">
-
-var picsArray = new Array();
-var value = null;
-function sendNames() {
-	return false;
-};
+//<![CDATA[
 $(document).ready(function() {
+	$('.clipboard').zclip({
+		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
+		copy:$('.content').val(),
+        afterCopy:function(){ alert('<?php echo __('Copied to clipboard'); ?>'); }
+    });
 	$(".save_file").click(function(){
 		var action = confirm('<?php echo __('Do you want to change the existing file?'); ?>');
 		if(action){
@@ -156,4 +149,5 @@ $(document).ready(function() {
 		return false;
 	});
 });
+//]]>
 </script>

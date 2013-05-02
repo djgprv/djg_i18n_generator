@@ -37,6 +37,7 @@ Plugin::setInfos(array(
 ));
 
 Plugin::addController('djg_i18n_generator', __('[djg] i18n Generator'), true, true);
+Plugin::addJavascript('djg_i18n_generator', 'assets/jquery.zclip.js');
 Dispatcher::addRoute(array(
 	/* backend */
 	'/djg_i18n_generator/save_file.php' => '/plugin/djg_i18n_generator/save_file', //ajax

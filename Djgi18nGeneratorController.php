@@ -25,15 +25,17 @@ if (!defined('IN_CMS')) { exit(); }
 class DjgI18nGeneratorController extends PluginController {
 	static $langArray = array();
 
-    public function __construct() {
-        $this->setLayout('backend');
-		$this->assignToLayout('sidebar', new View('../../plugins/djg_i18n_generator/views/sidebar'));
-		/* array of languages */
-		self::$langArray['en']['name'] =  'English';
-		self::$langArray['pl']['name'] =  'Polish';
-		self::$langArray['ru']['name'] =  'Russian';
-		self::$langArray['de']['name'] =  'German';
-	}
+	function __construct() {
+        AuthUser::load();
+        if (defined('CMS_BACKEND')) {
+            $this->setLayout('backend');
+			self::$langArray['en']['name'] =  'English';
+			self::$langArray['pl']['name'] =  'Polish';
+			self::$langArray['ru']['name'] =  'Russian';
+			self::$langArray['de']['name'] =  'German';
+			$this->assignToLayout('sidebar', new View('../../plugins/djg_i18n_generator/views/sidebar'));
+        }
+    }
 	public function index() {
         $this->en_language();
     }
@@ -100,16 +102,21 @@ class DjgI18nGeneratorController extends PluginController {
 		$plugin_name = $_GET['plugin_name'];
 		$content = $_GET['content'];		
 		if(file_put_contents(CORE_ROOT.DS.'plugins'.DS.$plugin_name.DS.'i18n'.DS.$file_name, $content)) $json2['error'] = 0;
-		echo json_encode($json2);		
+		echo json_encode($json2);
+		exit();
 	}
 	function translate_file()
 	{
-		$json2['error'] = 1;
-		if($_GET['line']==''):
-			$json2['line'] = "'" . $_GET['line'] . "' => '" . $_GET['line'] . "',";
+		$json2['error'] = 0;
+		if((strpos($_GET['aa'],'[=>]')) === false):
+			$json2['line'] = $_GET['aa'];
+		elseif($_GET['aa'] == '[=>]'):
+			$json2['line'] = "'' => '',\n";
 		else:
-			$json2['line'] = "'" . $_GET['line'] . "' => '" . self::translate($_GET['lang'],$_GET['line']) . "',";
+			$a = explode('[=>]',$_GET['aa']);
+			$json2['line'] = "'" . $a[0] . "' => '" . self::translate($_GET['lang'],$a[1]) . "',\n";
 		endif;
-		echo json_encode($json2);	
+		echo json_encode($json2);
+		exit();
 	}
 }

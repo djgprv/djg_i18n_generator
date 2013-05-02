@@ -1,3 +1,7 @@
 #djg_i18n_generator {}
-#djg_i18n_generator  .save_file, #djg_i18n_generator  .translate_file {cursor:pointer;}
-#djg_i18n_generator  textarea.content{white-space: nowrap; height: 300px; margin: 10px 0;}
+#djg_i18n_generator .flow {height:200px; overflow: auto; border: 1px solid #ccc; padding: 0px 20px; margin: 10px 0;}
+#djg_i18n_generator  .save_file, #djg_i18n_generator  .translate_file, #djg_i18n_generator  .clipboard {cursor:pointer;}
+#djg_i18n_generator  textarea.content{height: 300px; margin: 10px 0;}
+#djg_i18n_generator ol.lines {margin-left:20px;}
+#djg_i18n_generator ol.lines li {padding:2px 0; color:#ccc;}
+#djg_i18n_generator ol.lines li.code {color:#333;}
