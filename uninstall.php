@@ -18,7 +18,7 @@ if (!defined('IN_CMS')) { exit(); }
  * @package Plugins
  * @subpackage djg_i18n_generator
  *
- * @author Micha≥ Uchnast <djgprv@gmail.com>,
+ * @author Micha≈Ç Uchnast <djgprv@gmail.com>,
  * @copyright kreacjawww.pl
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 license
  */
