@@ -40,6 +40,7 @@ return array(
 'Read en-message.php file' => 'Read en-message.php file', 
 'Translate file' => 'Translate file', 
 'Please wait' => 'Please wait', 
+'Translate line error.' => 'Translate line error.', 
 'It can take a view minutes.' => 'It can take a view minutes.', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
