@@ -134,13 +134,12 @@ $(document).ready(function(){
 		var action = confirm('<?php echo __('Do you want to change the existing file?'); ?>');
 		if(action){
 			$.ajax({ 
-					type: "GET", 
+					type: "POST", 
 					data: {'file_name':'<?php echo $file_name; ?>','plugin_name':'<?php echo $plugin_name; ?>','content':$('.content').val()},
-					dataType: "json", cache: true,
+					dataType: "json",
 					url: '<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>djg_i18n_generator/save_file.php',
-					contentType: "application/json; charset=utf-8", 
 					beforeSend: function() {},
-					error: function() {alert('<?php echo __('Unspecified ajax error.'); ?>');}, 
+					error: function(jqXHR, exception) {alert('<?php echo __('Ajax error status: '); ?>'+jqXHR.status);}, 
 					success: function(data) {
 						if(data.error!=0)
 						{

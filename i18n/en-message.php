@@ -31,7 +31,7 @@ return array(
 'Copy to clipboard' => 'Copy to clipboard', 
 'Copied to clipboard' => 'Copied to clipboard', 
 'Do you want to change the existing file?' => 'Do you want to change the existing file?', 
-'Unspecified ajax error.' => 'Unspecified ajax error.', 
+'Ajax error status: ' => 'Ajax error status: ', 
 'The file was not saved.' => 'The file was not saved.', 
 'The file has been saved as :name' => 'The file has been saved as :name', 
 /** views\other_languages.php */ 
@@ -42,6 +42,7 @@ return array(
 'Please wait' => 'Please wait', 
 'Translate line error.' => 'Translate line error.', 
 'It can take a view minutes.' => 'It can take a view minutes.', 
+'Unspecified ajax error.' => 'Unspecified ajax error.', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
 'Header' => 'Header', 
