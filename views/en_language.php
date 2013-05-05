@@ -121,7 +121,7 @@ endif;
 //<![CDATA[
 $(document).ready(function() {
 	$(".save_file").click(function(){
-		var action = confirm('<?php echo __('Do you want to change the existing file?'); ?>');
+		var action = confirm('<?php echo __('Do you want to modify the existing file?'); ?>');
 		if(action){
 			$.ajax({ 
 					type: "POST", 

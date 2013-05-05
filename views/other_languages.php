@@ -121,7 +121,7 @@ function translate() {
 };
 $(document).ready(function(){
 	$(".translate_file").click(function(){
-		var action = confirm('<?php echo __('It can take a view minutes.'); ?>');
+		var action = confirm('<?php echo __('It can take a few minutes.'); ?>');
 		if(action){
 			$('.translate_file').hide();
 			$('.preloader').show();
@@ -132,7 +132,7 @@ $(document).ready(function(){
 		return false;
 	});
 	$(".save_file").click(function(){
-		var action = confirm('<?php echo __('Do you want to change the existing file?'); ?>');
+		var action = confirm('<?php echo __('Do you want to modify the existing file?'); ?>');
 		if(action){
 			$.ajax({ 
 					type: "POST", 
