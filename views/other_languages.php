@@ -144,9 +144,9 @@ $(document).ready(function(){
 					success: function(data) {
 						if(data.error!=0)
 						{
-							alert('<?php echo __('The file was not saved.'); ?>');
+							showAlert('<?php echo __('The file was not saved.'); ?>','error');
 						}else{
-							alert('<?php echo __('The file has been saved as :name',array(':name'=>$file_name)); ?>');
+							showAlert('<?php echo __('The file has been saved as :name',array(':name'=>$file_name)); ?>','ok');
 						}
 					},
 					complete: function() {}
@@ -157,7 +157,7 @@ $(document).ready(function(){
 	$('.clipboard').zclip({
 		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
 		copy:$('.content').val(),
-        afterCopy:function(){ alert('<?php echo __('Copied to clipboard'); ?>'); }
+        afterCopy:function(){ showAlert('<?php echo __('Copied to clipboard'); ?>','alert'); }
     });
 });
 //]]>

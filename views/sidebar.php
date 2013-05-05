@@ -24,5 +24,5 @@ if (!defined('IN_CMS')) { exit(); }
 <p class="button"><a href="<?php echo get_url('plugin/djg_i18n_generator/documentation'); ?>"><img src="<?php echo PLUGINS_URI; ?>djg_i18n_generator/images/32_documentation.png" align="middle" alt="documentation icon" /> <?php echo __('Documentation'); ?></a></p>
 <div class="box">
     <h2><?php echo __('Dialog window'); ?></h2>
-	<p>_</p>
+	<div class="djg_dialog_window"></div>
 </div>
