@@ -5,3 +5,4 @@
 #djg_i18n_generator ol.lines {margin-left:20px;}
 #djg_i18n_generator ol.lines li {padding:2px 0; color:#ccc;}
 #djg_i18n_generator ol.lines li.code {color:#333;}
+.clipboard {display: inline-block; float: right; width:32px; height:32px; background: url('./images/32_clipboard.png') no-repeat 0 0; cursor: pointer; text-indent: -9999px;  }

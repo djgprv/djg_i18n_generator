@@ -79,6 +79,7 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 ?>
 <textarea class="content"></textarea>
 <img style="display: none;" class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
+<a href="#" style="display: none;" class="clipboard" >Copy to clipboard</a>
 <?php
 endif;
 ?>
@@ -153,6 +154,11 @@ $(document).ready(function(){
 		};
 		return false;
 	});
+	$('.clipboard').zclip({
+		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
+		copy:$('.content').val(),
+        afterCopy:function(){ alert('<?php echo __('Copied to clipboard'); ?>'); }
+    });
 });
 //]]>
 </script>

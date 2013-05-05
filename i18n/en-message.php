@@ -28,12 +28,11 @@ return array(
 'Generate' => 'Generate', 
 'Poll (:id) is :status now!' => 'Poll (:id) is :status now!', 
 'Save file' => 'Save file', 
-'Copy to clipboard' => 'Copy to clipboard', 
-'Copied to clipboard' => 'Copied to clipboard', 
 'Do you want to change the existing file?' => 'Do you want to change the existing file?', 
 'Ajax error status: ' => 'Ajax error status: ', 
 'The file was not saved.' => 'The file was not saved.', 
 'The file has been saved as :name' => 'The file has been saved as :name', 
+'Copied to clipboard' => 'Copied to clipboard', 
 /** views\other_languages.php */ 
 'Other languages generator.' => 'Other languages generator.', 
 'Language' => 'Language', 
@@ -42,7 +41,6 @@ return array(
 'Please wait' => 'Please wait', 
 'Translate line error.' => 'Translate line error.', 
 'It can take a view minutes.' => 'It can take a view minutes.', 
-'Unspecified ajax error.' => 'Unspecified ajax error.', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
 'Header' => 'Header', 

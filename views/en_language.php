@@ -107,7 +107,7 @@ $output .= "return array(\n";
 	?>
 	<textarea class="content"><?php echo $output; ?></textarea>
 	<img class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
-	<img class="clipboard" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_clipboard.png" alt="<?php echo __('Copy to clipboard'); ?>" title="<?php echo __('Copy to clipboard'); ?>" />
+	<a href="#" class="clipboard" >Copy to clipboard</a>
 	<?php
 	$mtime = explode(' ', microtime());
 	$totaltime = $mtime[0] + $mtime[1] - $starttime;
@@ -116,14 +116,10 @@ $output .= "return array(\n";
 endif;
 ?>
 </div>
+
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function() {
-	$('.clipboard').zclip({
-		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
-		copy:$('.content').val(),
-        afterCopy:function(){ alert('<?php echo __('Copied to clipboard'); ?>'); }
-    });
 	$(".save_file").click(function(){
 		var action = confirm('<?php echo __('Do you want to change the existing file?'); ?>');
 		if(action){
@@ -147,6 +143,11 @@ $(document).ready(function() {
 		};
 		return false;
 	});
+	$('.clipboard').zclip({
+		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
+		copy:$('.content').val(),
+        afterCopy:function(){ alert('<?php echo __('Copied to clipboard'); ?>'); }
+    });
 });
 //]]>
 </script>
