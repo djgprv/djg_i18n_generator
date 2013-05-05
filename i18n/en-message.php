@@ -28,7 +28,7 @@ return array(
 'Generate' => 'Generate', 
 'Poll (:id) is :status now!' => 'Poll (:id) is :status now!', 
 'Save file' => 'Save file', 
-'Do you want to change the existing file?' => 'Do you want to change the existing file?', 
+'Do you want to modify the existing file?' => 'Do you want to modify the existing file?', 
 'Ajax error status: ' => 'Ajax error status: ', 
 'The file was not saved.' => 'The file was not saved.', 
 'The file has been saved as :name' => 'The file has been saved as :name', 
@@ -40,7 +40,7 @@ return array(
 'Translate file' => 'Translate file', 
 'Please wait' => 'Please wait', 
 'Translate line error.' => 'Translate line error.', 
-'It can take a view minutes.' => 'It can take a view minutes.', 
+'It can take a few minutes.' => 'It can take a few minutes.', 
 /** views\settings.php */ 
 'Settings' => 'Settings', 
 'Header' => 'Header', 
