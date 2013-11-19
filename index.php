@@ -27,7 +27,7 @@ Plugin::setInfos(array(
     'id'          => 'djg_i18n_generator',
     'title'       => __('[djg] i18n Generator'),
     'description' => __('[djg] i18n Generator'),
-    'version'     => '0.0.1',
+    'version'     => '0.2',
    	'license'     => 'GPL',
 	'author'      => 'Michał Uchnast',
     'website'     => 'http://www.kreacjawww.pl/',

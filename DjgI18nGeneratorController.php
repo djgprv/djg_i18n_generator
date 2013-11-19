@@ -100,7 +100,8 @@ class DjgI18nGeneratorController extends PluginController {
 		$json2['error'] = 1;
 		$file_name = $_POST['file_name'];
 		$plugin_name = $_POST['plugin_name'];
-		$content = $_POST['content'];		
+		$content = $_POST['content'];
+		mkdir(CORE_ROOT.DS.'plugins'.DS.$plugin_name.DS.'i18n', 0755, true);
 		if(file_put_contents(CORE_ROOT.DS.'plugins'.DS.$plugin_name.DS.'i18n'.DS.$file_name, $content)) $json2['error'] = 0;
 		echo json_encode($json2);
 		exit();
