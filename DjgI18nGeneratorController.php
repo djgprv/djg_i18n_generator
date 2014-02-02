@@ -71,12 +71,69 @@ class DjgI18nGeneratorController extends PluginController {
 		if ($handle = opendir($directory)) while (false !== ($file = readdir($handle))) if ($file != "." && $file != "..") if (is_dir($directory. "/" . $file)) $array_items[] = $file; closedir($handle);
 		return $array_items;	
 	}
-	public static function translate($lang,$text)
+	public static function translate_tmp($lang,$text)
 	{
 		$url = 'http://google-translate-api.herokuapp.com/translate?from=en&to='.$lang.'&text%5B%5D='.urlencode($text);
 		$obj = (array)json_decode(file_get_contents($url));
 		return $obj[$text];
 	}
+	public static function translate($phrase, $from ='en', $to = 'de'){
+		$ret ='';
+		if(strlen($phrase)>1600){ //split and translate each part individually to get around 2048 size limit:
+		$phrases = str_split($phrase,1600);
+		foreach($phrases as $p) $ret .= translate($p, $from, $to);
+		return($ret);
+		}else{
+		$url = "http://translate.google.com/translate_a/t?client=p&q=".urlencode($phrase)."&hl={$to}&sl={$from}&tl={$to}&ie=UTF-8&oe=UTF-8&multires=0" ;
+		$out = json_decode(self::curl($url), 1);
+		foreach($out['sentences'] as $sentence) {
+		$ret .= $sentence['trans'].' ';
+		}
+		return stripslashes(trim($ret));
+		}
+		}
+	
+	public static function curl($url,$params = array(),$is_coockie_set = false)
+	{
+		if(!$is_coockie_set){
+		/* STEP 1. let's create a cookie file */
+		$ckfile = tempnam ("/tmp", "CURLCOOKIE");
+		 
+		/* STEP 2. visit the homepage to set the cookie properly */
+		$ch = curl_init ($url);
+		curl_setopt ($ch, CURLOPT_COOKIEJAR, $ckfile);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+		$output = curl_exec ($ch);
+		}
+		 
+		$str = ''; $str_arr= array();
+		foreach($params as $key => $value)
+		{
+		$str_arr[] = urlencode($key)."=".urlencode($value);
+		}
+		if(!empty($str_arr))
+		$str = '?'.implode('&',$str_arr);
+		 
+		/* STEP 3. visit cookiepage.php */
+		 
+		$Url = $url.$str;
+		 
+		$ch = curl_init ($Url);
+		curl_setopt ($ch, CURLOPT_COOKIEFILE, $ckfile);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+		 
+		$output = curl_exec ($ch);
+		return $output;
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
 	public static function getLangs()
 	{
 		return self::$langArray;
@@ -115,7 +172,7 @@ class DjgI18nGeneratorController extends PluginController {
 			$json2['line'] = "'' => '',\n";
 		else:
 			$a = explode('[=>]',$_GET['aa']);
-			$json2['line'] = "'" . $a[0] . "' => '" . self::translate($_GET['lang'],$a[1]) . "',\n";
+			$json2['line'] = "'" . $a[0] . "' => '" . self::translate($a[1],'en',$_GET['lang']) . "',\n";
 		endif;
 		echo json_encode($json2);
 		exit();
