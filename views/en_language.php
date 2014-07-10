@@ -72,18 +72,24 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 	foreach ($files_list as $file) {
 		$fp = fopen($file, 'r');
 		$lines = array();
+		$lines_tmp = array();
 		while ($line = fgets($fp)){
-			$matches = array();		
-			preg_match_all("/__\('(.*?)'\)/", $line, $matches);
-			if(count($matches[1])>0):
-				foreach ($matches[1] as $matches) {
-					if (strpos($matches, ',array')) $matches = substr($matches, 0, strpos($matches, ',array')-1); // remove like __('Poll (:id) is :status now!',array(':id'=>$id,':status'=>'inactive')
-					if (strpos($matches, ', array')) $matches = substr($matches, 0, strpos($matches, ', array')-1); // remove like __('Poll (:id) is :status now!', array(':id'=>$id,':status'=>'inactive')
-					$lines_array[$file][] = $matches;
-				}
+			$lines_tmp = array_merge(array_filter(explode(';',$line)));
+			foreach($lines_tmp as $new_line ) $lines[] = ltrim($new_line);
+		}
+		foreach($lines as $line){
+			$matches = array();	
+			preg_match_all("/\/\/(.*?)/", $line, $matches0); //comments
+			preg_match_all("/\/\*(.*?)/", $line, $matches1);	/* comments	*/
+			preg_match_all("/__\(('|\")(?P<phrase>((?!__)|(?! ?array ?\().)+)('\)|'*,|\"\)|\",)/u", $line, $matches2);
+			if( (count($matches0[1])>0) || (count($matches1[1])>0) ):
+				continue;
+			elseif($matches2['phrase']):
+				$lines_array[$file][] = trim($matches2['phrase'][0]);
 			endif;
 		}
 	}
+	//echo'<pre>';print_r($lines_array);echo'</pre>';
 	/** unique */
 	$a = array();
 	foreach ($lines_array as $key => $value) {
@@ -93,7 +99,8 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 			$a[] =  "'".$fl1."' => '".$fl1."',";
 		}
 	}
-	$a = array_unique($a);
+	$a = (Plugin::getSetting('array_unique','djg_i18n_generator')) ? array_unique($a) : $a; // unique array
+	
 
 $lang = DjgI18nGeneratorController::getLangs();
 $lang = $lang['en']['name'];
@@ -105,27 +112,48 @@ $output .= "return array(\n";
 	}
 	$output .= ");";
 	?>
-	<textarea class="content"><?php echo $output; ?></textarea>
+	<textarea id="code" class="code content"><?php echo $output; ?></textarea>
 	<img class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
 	<a href="#" class="clipboard" >Copy to clipboard</a>
 	<?php
 	$mtime = explode(' ', microtime());
 	$totaltime = $mtime[0] + $mtime[1] - $starttime;
-	printf('Loaded in %.3f seconds.', $totaltime);
-
+	$totaltime = number_format($totaltime,2);
+	echo __('Loaded in :time second(s).',array(':time'=> $totaltime));
 endif;
 ?>
 </div>
-
 <script type="text/javascript">
 //<![CDATA[
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+	lineNumbers: true,
+	matchBrackets: true,
+	mode: "application/x-httpd-php",
+	indentWithTabs: true,
+	lineWrapping: <?php echo Plugin::getSetting('editor_line_wrapping','djg_i18n_generator'); ?>,
+	extraKeys: {
+        "F11": function(cm) {
+          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+        },
+        "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        }
+    }
+});
+var charWidth = editor.defaultCharWidth(), basePadding = 4;
+	editor.on("renderLine", function(cm, line, elt) {
+		var off = CodeMirror.countColumn(line.text, null, cm.getOption("tabSize")) * charWidth;
+		elt.style.textIndent = "-" + off + "px";
+		elt.style.paddingLeft = (basePadding + off) + "px";
+});
+editor.refresh();
 $(document).ready(function() {
 	$(".save_file").click(function(){
 		var action = confirm('<?php echo __('Do you want to modify the existing file?'); ?>');
 		if(action){
 			$.ajax({ 
 					type: "POST", 
-					data: {'file_name':'<?php echo $file_name; ?>','plugin_name':'<?php echo $plugin_name; ?>','content':$('.content').val()},
+					data: {'file_name':'<?php echo $file_name; ?>','plugin_name':'<?php echo $plugin_name; ?>','content':editor.getValue()},
 					dataType: "json",
 					url: '<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>djg_i18n_generator/save_file.php',
 					beforeSend: function() {},
@@ -145,7 +173,7 @@ $(document).ready(function() {
 	});
 	$('.clipboard').zclip({
 		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
-		copy:$('.content').val(),
+		copy: function() {return editor.getValue();},
         afterCopy:function(){ showAlert('<?php echo __('Copied to clipboard'); ?>','alert'); }
     });
 });

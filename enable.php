@@ -27,6 +27,9 @@ $settings = array(
     'version' => '0.3',
 	'comment_header' => $comment_header,
 	'comment_file' => '1',
+	'array_unique' => '1',
+	'editor_line_wrapping' => '0',
+	
 );
 // Insert the new ones
 if (Plugin::setAllSettings($settings, 'djg_i18n_generator'))

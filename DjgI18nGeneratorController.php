@@ -33,14 +33,20 @@ class DjgI18nGeneratorController extends PluginController {
 			self::$langArray['pl']['name'] =  'Polish';
 			self::$langArray['ru']['name'] =  'Russian';
 			self::$langArray['de']['name'] =  'German';
+			self::$langArray['ar']['name'] =  'Arabic';
+			self::$langArray['cs']['name'] =  'Czech';
+			self::$langArray['da']['name'] =  'Danish';
+			self::$langArray['sl']['name'] =  'Slovenian';
+			self::$langArray['nl']['name'] =  'Dutch';
 			$this->assignToLayout('sidebar', new View('../../plugins/djg_i18n_generator/views/sidebar'));
         }
     }
 	public function index() {
         $this->en_language();
     }
-    public function documentation() {
-        $this->display('djg_i18n_generator/views/documentation');
+	public function documentation() {
+		$content = Parsedown::instance()->parse(file_get_contents(PLUGINS_ROOT.DS.'djg_i18n_generator'.DS.'README.md'));
+        $this->display('djg_i18n_generator/views/documentation', array('content'=>$content));
     }
     function settings() {
         $this->display('djg_i18n_generator/views/settings', array('settings' => Plugin::getAllSettings('djg_i18n_generator')));
@@ -125,15 +131,7 @@ class DjgI18nGeneratorController extends PluginController {
 		$output = curl_exec ($ch);
 		return $output;
 	}
-	
-	
-	
 
-	
-	
-	
-	
-	
 	public static function getLangs()
 	{
 		return self::$langArray;
@@ -166,6 +164,7 @@ class DjgI18nGeneratorController extends PluginController {
 	function translate_file()
 	{
 		$json2['error'] = 0;
+		$_GET['aa'] = str_replace("\'", "'", $_GET['aa']);
 		if((strpos($_GET['aa'],'[=>]')) === false):
 			$json2['line'] = $_GET['aa'];
 		elseif($_GET['aa'] == '[=>]'):
@@ -174,6 +173,7 @@ class DjgI18nGeneratorController extends PluginController {
 			$a = explode('[=>]',$_GET['aa']);
 			$json2['line'] = "'" . $a[0] . "' => '" . self::translate($a[1],'en',$_GET['lang']) . "',\n";
 		endif;
+		
 		echo json_encode($json2);
 		exit();
 	}

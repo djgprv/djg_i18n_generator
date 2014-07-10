@@ -44,6 +44,25 @@ if (!defined('IN_CMS')) { exit(); }
 					</select>	
 				</td>
 			</tr>
+			<tr>
+                <td class="label"><label for="settings_array_unique"><?php echo __('Array unique'); ?>: </label></td>
+                <td class="field" colspan="2">
+					<select id="settings_array_unique" name="settings[array_unique]">
+						<option value="1" <?php if($settings['array_unique'] == "1") echo 'selected="selected"' ?>><?php echo __('Yes'); ?></option>
+						<option value="0" <?php if($settings['array_unique'] == "0") echo 'selected="selected"' ?>><?php echo __('No'); ?></option>
+					</select>	
+				</td>
+			</tr>
+			<tr>
+                <td class="label"><label for="settings_editor_line_wrapping"><?php echo __('Line wrapping'); ?>: </label></td>
+                <td class="field" colspan="2">
+					<select id="settings_editor_line_wrapping" name="settings[editor_line_wrapping]">
+						<option value="1" <?php if($settings['editor_line_wrapping'] == "1") echo 'selected="selected"' ?>><?php echo __('Yes'); ?></option>
+						<option value="0" <?php if($settings['editor_line_wrapping'] == "0") echo 'selected="selected"' ?>><?php echo __('No'); ?></option>
+					</select>	
+				</td>
+			</tr>
+
         </table>
     </fieldset>
     <br/>

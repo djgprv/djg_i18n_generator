@@ -62,20 +62,24 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 		echo '<div class="flow";><ol class="lines">'; 
 		while ($line = fgets($fp)){
 			$matches = array();		
-			preg_match_all("/'(.*?)'/", $line, $matches);
+			preg_match_all("/=> *?'(.*?)',/", $line, $matches);
+			//print_r($matches[1]);
 			if(count($matches[1])>0):
-				echo '<li class="code">'.$matches[1][0].'[=>]'.$matches[1][1].'</li>';
+				echo '<li class="code">'.$matches[1][0].'[=>]'.$matches[1][0].'</li>';
 			elseif($line!=''):
 				echo '<li>'.$line.'</li>';
 			endif;
 			
 		}
 		echo '</ol></div>';
+		
 ?>
 <img class="translate_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_translate.png" alt="<?php echo __('Translate file'); ?>" title="<?php echo __('Translate file'); ?>" />
 <img style="display: none;" class="preloader" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_preloader.gif" alt="<?php echo __('Please wait'); ?>" title="<?php echo __('Please wait'); ?>" />
+<img style="display: none;" class="stop_translate_process" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_stop.png" alt="<?php echo __('Stop process'); ?>" title="<?php echo __('Stop process'); ?>" />
 <?php		
 	endif;
+	
 ?>
 <textarea class="content"></textarea>
 <img style="display: none;" class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
@@ -88,6 +92,7 @@ endif;
 //<![CDATA[
 var linesArray = new Array();
 var value = '';
+var translate_in_progress = 0;
 function translate() {
 	value = linesArray.shift();
 	console.log(value);
@@ -108,12 +113,13 @@ function translate() {
 			}
 		},
 		complete: function() {
-			if (linesArray.length > 0) {
+			if ((linesArray.length > 0) && (translate_in_progress == 1)) {
 				translate();
 			}else{
 				console.log('done');
 				$('.translate_file').show();
 				$('.preloader').hide();
+				$('.stop_translate_process').hide();
 				$('.save_file').show();
 			};
 		}
@@ -123,13 +129,18 @@ $(document).ready(function(){
 	$(".translate_file").click(function(){
 		var action = confirm('<?php echo __('It can take a few minutes.'); ?>');
 		if(action){
+			translate_in_progress = 1;
 			$('.translate_file').hide();
 			$('.preloader').show();
+			$('.stop_translate_process').show();
 			$('.lines').find('li').each(function(){ linesArray.push( $(this).text() ); });;
 			$('.content').html('&lt;?php\n');
 			translate();
 		};
 		return false;
+	});
+	$(".stop_translate_process").click(function(){
+		translate_in_progress = 0;
 	});
 	$(".save_file").click(function(){
 		var action = confirm('<?php echo __('Do you want to modify the existing file?'); ?>');

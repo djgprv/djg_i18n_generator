@@ -27,7 +27,7 @@ Plugin::setInfos(array(
     'id'          => 'djg_i18n_generator',
     'title'       => __('[djg] i18n Generator'),
     'description' => __('[djg] i18n Generator'),
-    'version'     => '0.3',
+    'version'     => '0.4',
    	'license'     => 'GPL',
 	'author'      => 'Michał Uchnast',
     'website'     => 'http://www.kreacjawww.pl/',
@@ -35,9 +35,20 @@ Plugin::setInfos(array(
     'require_wolf_version' => '0.7.3',
 	'type'			=>	'both'
 ));
-
+AutoLoader::addFolder(dirname(__FILE__) . '/models');
 Plugin::addController('djg_i18n_generator', __('[djg] i18n Generator'), true, true);
 Plugin::addJavascript('djg_i18n_generator', 'assets/jquery.zclip.js');
+/** code mirror */
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/codemirror.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/matchbrackets.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/htmlmixed.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/xml.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/javascript.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/css.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/clike.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/php.js');
+Plugin::addJavascript('djg_i18n_generator', 'assets/codemirror/fullscreen.js');
+
 Dispatcher::addRoute(array(
 	/* backend */
 	'/djg_i18n_generator/save_file.php' => '/plugin/djg_i18n_generator/save_file', //ajax
