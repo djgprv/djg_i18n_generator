@@ -31,7 +31,7 @@ Plugin::setInfos(array(
    	'license'     => 'GPL',
 	'author'      => 'Michał Uchnast',
     'website'     => 'http://www.kreacjawww.pl/',
-    'update_url'  => 'http://kreacjawww.pl/public/wolf_plugins/plugin-versions.xml',
+    'update_url'  => 'https://raw.githubusercontent.com/djgprv/djg_i18n_generator/master/versions.xml',
     'require_wolf_version' => '0.7.3',
 	'type'			=>	'both'
 ));

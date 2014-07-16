@@ -26,3 +26,4 @@ if (!defined('IN_CMS')) { exit(); }
     <h2><?php echo __('Dialog window'); ?></h2>
 	<div class="djg_dialog_window"></div>
 </div>
+<p class="kreacjawww"><span><a href="http://kreacjawww.pl/">&copy; Michał Uchnast - http://kreacjawww.pl/</a></span></p>
