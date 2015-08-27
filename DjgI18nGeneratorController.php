@@ -64,6 +64,10 @@ class DjgI18nGeneratorController extends PluginController {
 		$plugins = self::getPluginsList();
 		$this->display('djg_i18n_generator/views/en_language', array('plugins' => $plugins));
 	}
+    function pattern() {
+		$plugins = self::getPluginsList();
+		$this->display('djg_i18n_generator/views/pattern', array('plugins' => $plugins));
+	}
     function other_languages() {
 		$plugins = self::getPluginsList();
 		$this->display('djg_i18n_generator/views/other_languages', array('plugins' => $plugins));
@@ -77,28 +81,11 @@ class DjgI18nGeneratorController extends PluginController {
 		if ($handle = opendir($directory)) while (false !== ($file = readdir($handle))) if ($file != "." && $file != "..") if (is_dir($directory. "/" . $file)) $array_items[] = $file; closedir($handle);
 		return $array_items;	
 	}
-	public static function translate_tmp($lang,$text)
-	{
-		$url = 'http://google-translate-api.herokuapp.com/translate?from=en&to='.$lang.'&text%5B%5D='.urlencode($text);
-		$obj = (array)json_decode(file_get_contents($url));
-		return $obj[$text];
+	/** 2015.08 */
+	public static function translate($phrase, $from ='en', $to = 'pl'){
+		$arr = json_decode(file_get_contents('http://mymemory.translated.net/api/get?q='.urlencode($phrase).'&langpair='.$from.'|'.$to),true);
+		return preg_replace('/\'/', '\\\'',stripslashes(trim($arr['matches'][0]['translation'])));
 	}
-	public static function translate($phrase, $from ='en', $to = 'de'){
-		$ret ='';
-		if(strlen($phrase)>1600){ //split and translate each part individually to get around 2048 size limit:
-		$phrases = str_split($phrase,1600);
-		foreach($phrases as $p) $ret .= translate($p, $from, $to);
-		return($ret);
-		}else{
-		$url = "http://translate.google.com/translate_a/t?client=p&q=".urlencode($phrase)."&hl={$to}&sl={$from}&tl={$to}&ie=UTF-8&oe=UTF-8&multires=0" ;
-		$out = json_decode(self::curl($url), 1);
-		foreach($out['sentences'] as $sentence) {
-		$ret .= $sentence['trans'].' ';
-		}
-		return stripslashes(trim($ret));
-		}
-		}
-	
 	public static function curl($url,$params = array(),$is_coockie_set = false)
 	{
 		if(!$is_coockie_set){
@@ -171,7 +158,10 @@ class DjgI18nGeneratorController extends PluginController {
 			$json2['line'] = "'' => '',\n";
 		else:
 			$a = explode('[=>]',$_GET['aa']);
-			$json2['line'] = "'" . $a[0] . "' => '" . self::translate($a[1],'en',$_GET['lang']) . "',\n";
+			//$json2['line'] = "'" . $a[0] . "' => '" . self::translate($a[1],'en',$_GET['lang']) . "',\n";
+			$json2['line'] = "'" . preg_replace('/\'/', '\\\'',$a[0]) . "' => '" . self::translate($a[1],'en',$_GET['lang']) . "',\n";
+			
+			
 		endif;
 		
 		echo json_encode($json2);

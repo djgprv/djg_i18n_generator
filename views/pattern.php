@@ -23,7 +23,7 @@ if (!defined('IN_CMS')) { exit(); }
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 license
  */
 ?>
-<h1><?php echo __('Basic en-message.php file generator.'); ?></h1>
+<h1><?php echo __('Pattern file'); ?></h1>
 <div id="djg_i18n_generator">
 <form method="POST">
 <label for="plugin_name"><?php echo __('Plugin'); ?>: </label>
@@ -37,93 +37,35 @@ if (!defined('IN_CMS')) { exit(); }
 		}
 	?>
 </select>
-<?php
-$file_ext = (isset($_POST['files']))?$_POST['files']:'*.*';
-$add_comments = Plugin::getSetting('comment_file','djg_i18n_generator');
-?>
-<label for="files"><?php echo __('Files'); ?>: </label>
-<input name="files" id="files" value="<?php echo $file_ext; ?>"/>
-<input class="button" type="submit" accesskey="s" value="<?php echo __('Generate'); ?>" />
+<input class="button" type="submit" value="<?php echo __('Generate pattern file'); ?>" />
 </form>
 
 <?php
 if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
-
-	$starttime = explode(' ', microtime());
-	$starttime = $starttime[1] + $starttime[0];
-	function rglob($pattern='*', $flags = 0, $path='')
-	{
-		$paths=glob($path.'*', GLOB_MARK|GLOB_ONLYDIR|GLOB_NOSORT);
-		$files=glob($path.$pattern, $flags);
-		foreach ($paths as $path) { $files=array_merge($files,rglob($pattern, $flags, $path)); }
-		return $files;
-	}
-
 	$plugin_name = $_POST['plugin_name'];
-	$file_name = 'en-message.php';
-	chdir(CORE_ROOT.DS.'plugins'.DS.$plugin_name);
-
-	$files_list = array();
-	$files_list = array_merge($files_list,rglob($file_ext));
-
-
-	$lines_array = array();
-
-	foreach ($files_list as $file) {
+	$file = CORE_ROOT.DS.'plugins'.DS.$plugin_name.DS.'i18n'.DS.'en-message.php';
+	$lang = "pattern";
+	$file_name = $lang.'-message.php';
+	$header = "&lt;?php\n";
+	$header .= DjgI18nGeneratorController::getHeader($lang,$plugin_name);
+	$output = "";
+	if(file_exists($file)):
 		$fp = fopen($file, 'r');
 		$lines = array();
-		$lines_tmp = array();
 		while ($line = fgets($fp)){
-			$lines_tmp = array_merge(array_filter(explode('; ',$line)));
-			foreach($lines_tmp as $new_line ) $lines[] = ltrim($new_line);
+			$output .= preg_replace("/=> *?'(.*?)',/","=> '',",$line);
 		}
-		foreach($lines as $line){
-			$matches = array();	
-			preg_match_all("/\/\/(.*?)/", $line, $matches0); //comments
-			preg_match_all("/\/\*(.*?)/", $line, $matches1);	/* comments	*/
-			preg_match_all("/(.*)__\\(\'(.*)(\'\s*\\,\s*array.*|\'\\))/i", $line, $matches2);
-			if( (count($matches0[1])>0) || (count($matches1[1])>0) ):
-				continue;
-			elseif($matches2[2]):
-				$lines_array[$file][] = trim($matches2[2][0]);
-			endif;
-		}
-	}
-	//echo'<pre>';print_r($lines_array);echo'</pre>';
-	/** unique */
-	$a = array();
-	foreach ($lines_array as $key => $value) {
-		if($add_comments == '1')$a[] = "/** $key */";
-
-		foreach ($value as $fl1) {
-			$a[] =  "'".$fl1."' => '".$fl1."',";
-		}
-	}
-	$a = (Plugin::getSetting('array_unique','djg_i18n_generator')) ? array_unique($a) : $a; // unique array
-	
-
-$lang = DjgI18nGeneratorController::getLangs();
-$lang = $lang['en']['name'];
-$output = "&lt;?php\n";
-$output .= DjgI18nGeneratorController::getHeader($lang,$plugin_name);
-$output .= "return array(\n";
-	foreach ($a as $value) {
-		$output .= "$value \n";
-	}
-	$output .= ");";
-	?>
-	<textarea id="code" class="code content"><?php echo $output; ?></textarea>
-	<img class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
-	<a href="#" class="clipboard" >Copy to clipboard</a>
-	<?php
-	$mtime = explode(' ', microtime());
-	$totaltime = $mtime[0] + $mtime[1] - $starttime;
-	$totaltime = number_format($totaltime,2);
-	echo __('Loaded in :time second(s).',array(':time'=> $totaltime));
-endif;
+	$output = preg_replace('/<\?php(.+?)return array/is','',$output);
+	$output = $header.'return array'.$output
 ?>
+<?php endif; echo '<textarea id="code" class="code content">'.$output.'</textarea>'; ?>
+
+<img class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
+<a href="#" class="clipboard" >Copy to clipboard</a>
+<?php endif; ?>
 </div>
-<script type="text/javascript">
+
+<script type="text/javascript"> 
 //<![CDATA[
 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 	lineNumbers: true,
@@ -147,13 +89,13 @@ var charWidth = editor.defaultCharWidth(), basePadding = 4;
 		elt.style.paddingLeft = (basePadding + off) + "px";
 });
 editor.refresh();
-$(document).ready(function() {
+$(document).ready(function(){
 	$(".save_file").click(function(){
 		var action = confirm('<?php echo __('Do you want to modify the existing file?'); ?>');
 		if(action){
 			$.ajax({ 
 					type: "POST", 
-					data: {'file_name':'<?php echo $file_name; ?>','plugin_name':'<?php echo $plugin_name; ?>','content':editor.getValue()},
+					data: {'file_name':'<?php echo $file_name; ?>','plugin_name':'<?php echo $plugin_name; ?>','content':$('.content').val()},
 					dataType: "json",
 					url: '<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>djg_i18n_generator/save_file.php',
 					beforeSend: function() {},
@@ -173,7 +115,7 @@ $(document).ready(function() {
 	});
 	$('.clipboard').zclip({
 		path:'<?php echo PLUGINS_URI; ?>djg_i18n_generator/assets/ZeroClipboard.swf',
-		copy: function() {return editor.getValue();},
+		copy:$('.content').val(),
         afterCopy:function(){ showAlert('<?php echo __('Copied to clipboard'); ?>','alert'); }
     });
 });

@@ -77,10 +77,7 @@ if( (isset($_POST['plugin_name'])) && (!empty($_POST['plugin_name'])) ):
 <img class="translate_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_translate.png" alt="<?php echo __('Translate file'); ?>" title="<?php echo __('Translate file'); ?>" />
 <img style="display: none;" class="preloader" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_preloader.gif" alt="<?php echo __('Please wait'); ?>" title="<?php echo __('Please wait'); ?>" />
 <img style="display: none;" class="stop_translate_process" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_stop.png" alt="<?php echo __('Stop process'); ?>" title="<?php echo __('Stop process'); ?>" />
-<?php		
-	endif;
-	
-?>
+<?php endif; ?>
 <textarea class="content"></textarea>
 <img style="display: none;" class="save_file" src="<?php echo rtrim(URL_PUBLIC,'/').(USE_MOD_REWRITE ? '/': '/?/'); ?>wolf/plugins/djg_i18n_generator/images/32_save_file.png" alt="<?php echo __('Save file'); ?>" title="<?php echo __('Save file'); ?>" />
 <a href="#" style="display: none;" class="clipboard" >Copy to clipboard</a>
@@ -171,5 +168,6 @@ $(document).ready(function(){
         afterCopy:function(){ showAlert('<?php echo __('Copied to clipboard'); ?>','alert'); }
     });
 });
+
 //]]>
 </script>

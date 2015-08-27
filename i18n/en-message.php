@@ -18,9 +18,9 @@ return array(
 '[djg] i18n Generator' => '[djg] i18n Generator', 
 /** uninstall.php */ 
 'Unable to delete plugin settings.' => 'Unable to delete plugin settings.', 
-/** views\documentation.php */ 
+/** views/documentation.php */ 
 'Documentation' => 'Documentation', 
-/** views\en_language.php */ 
+/** views/en_language.php */ 
 'Basic en-message.php file generator.' => 'Basic en-message.php file generator.', 
 'Plugin' => 'Plugin', 
 '- chose plugin -' => '- chose plugin -', 
@@ -33,7 +33,7 @@ return array(
 'The file was not saved.' => 'The file was not saved.', 
 'The file has been saved as :name' => 'The file has been saved as :name', 
 'Copied to clipboard' => 'Copied to clipboard', 
-/** views\other_languages.php */ 
+/** views/other_languages.php */ 
 'Other languages generator.' => 'Other languages generator.', 
 'Language' => 'Language', 
 'Read en-message.php file' => 'Read en-message.php file', 
@@ -42,7 +42,9 @@ return array(
 'Stop process' => 'Stop process', 
 'Translate line error.' => 'Translate line error.', 
 'It can take a few minutes.' => 'It can take a few minutes.', 
-/** views\settings.php */ 
+/** views/pattern_languages.php */ 
+'Generate pattern file' => 'Generate pattern file', 
+/** views/settings.php */ 
 'Settings' => 'Settings', 
 'Header' => 'Header', 
 '' => '', 
@@ -52,9 +54,10 @@ return array(
 'Array unique' => 'Array unique', 
 'Line wrapping' => 'Line wrapping', 
 'Save' => 'Save', 
-'You have modified this page.  If you navigate away from this page without first saving your data' => 'You have modified this page.  If you navigate away from this page without first saving your data', 
-/** views\sidebar.php */ 
+'You have modified this page.  If you navigate away from this page without first saving your data, the changes will be lost.' => 'You have modified this page.  If you navigate away from this page without first saving your data, the changes will be lost.', 
+/** views/sidebar.php */ 
 'English language' => 'English language', 
+'Pattern file' => 'Pattern file', 
 'Other languages' => 'Other languages', 
 'Dialog window' => 'Dialog window', 
 );
